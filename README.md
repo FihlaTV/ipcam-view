@@ -12,10 +12,10 @@ If you have problem to identify your IpCam url, please follow this [link](https:
 ### Features
 - [x] Default support by `android-camera-axis`
 - [ ] Native support by `SimpleMjpegView`
-- [x] Handle credentials
+- [x] Handle credentials and cookies
 - [x] Multiple camera in one activity
 - [x] Snapshot
-- [x] Flip image
+- [x] Flip and rotate image
 - [ ] Video recording
 - [x] Custom appearance
 
@@ -25,7 +25,7 @@ repositories {
     jcenter()
 }
 dependencies {
-    compile 'com.github.niqdev:mjpeg-view:1.3.2'
+    compile 'com.github.niqdev:mjpeg-view:1.6.0'
 }
 ```
 
@@ -37,8 +37,12 @@ dependencies {
 
 <img src="images/screenshot-custom-appearance.png" alt="custom-appearance" height="600" /> <img src="images/screenshot-settings.png" alt="settings" height="600" />
 
-
-<a href='https://play.google.com/store/apps/details?id=com.github.niqdev.ipcam&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-ap-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/apps/en-play-badge.png' width="200"/></a>
+[<img src="https://f-droid.org/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="100">](https://f-droid.org/packages/com.github.niqdev.ipcam/)
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
+     alt="Get it on Google Play"
+     height="100">](https://play.google.com/store/apps/details?id=com.github.niqdev.ipcam)
 
 ### Usage
 
@@ -106,6 +110,17 @@ mjpegView.setFpsOverlayTextColor(Color.WHITE);
 To clear the last frame since the canvas keeps the current image even if you stop the stream, e.g. hide/show
 ```java
 mjpegView.clearStream();
+```
+
+To flip the image
+```java
+mjpegView.flipHorizontal(true);
+mjpegView.flipVertical(true);
+```
+
+To rotate the image
+```java
+mjpegView.setRotate(90);  // degrees
 ```
 
 ### Apps that use this library

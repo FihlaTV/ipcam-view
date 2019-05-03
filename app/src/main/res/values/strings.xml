@@ -19,14 +19,15 @@
     <string name="menu_toggleStreamOff">Hide stream</string>
     <string name="menu_toggleStreamOn">Show stream</string>
 
-    <string name="textView_version">lib v1.3.2</string>
+    <string name="textView_version">lib v1.6.0</string>
     <string name="textView_progress">Loading&#8230;</string>
 
     <string name="pref_header_general">General</string>
     <string name="pref_header_authentication">Authentication</string>
 
     <string name="pref_title_ipcam_url">Url</string>
-    <string name="pref_default_ipcam_url">http://plazacam.studentaffairs.duke.edu/mjpg/video.mjpg</string>
+    <!-- http://www.insecam.org -->
+    <string name="pref_default_ipcam_url">http://80.24.57.252:60001/mjpg/video.mjpg</string>
 
     <string name="pref_title_authentication">Use credentials</string>
     <string name="pref_title_authentication_username">Username</string>

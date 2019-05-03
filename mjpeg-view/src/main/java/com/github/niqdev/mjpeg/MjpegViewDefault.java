@@ -33,7 +33,9 @@ public class MjpegViewDefault extends AbstractMjpegView {
     private MjpegViewThread thread;
     private MjpegInputStreamDefault mIn = null;
     private boolean showFps = false;
-    private boolean flipSource = false;
+    private boolean flipHorizontal = false;
+    private boolean flipVertical = false;
+    private float rotateDegrees = 0;
     private volatile boolean mRun = false;
     private volatile boolean surfaceDone = false;
     private Paint overlayPaint;
@@ -134,12 +136,12 @@ public class MjpegViewDefault extends AbstractMjpegView {
                         }
                         synchronized (mSurfaceHolder) {
                             try {
-                                if(flipSource)
-                                {
-                                    bm = flip(mIn.readMjpegFrame());
-                                } else {
-                                    bm = mIn.readMjpegFrame();
-                                }
+                                bm = mIn.readMjpegFrame();
+                                if(flipHorizontal || flipVertical)
+                                    bm = flip(bm);
+                                if(rotateDegrees != 0)
+                                    bm = rotate(bm, rotateDegrees);
+
                                 _frameCaptured(bm);
                                 destRect = destRect(bm.getWidth(),
                                         bm.getHeight());
@@ -192,9 +194,19 @@ public class MjpegViewDefault extends AbstractMjpegView {
     Bitmap flip(Bitmap src)
     {
         Matrix m = new Matrix();
-        m.preScale(-1, 1);
+        float sx = flipHorizontal ? -1 : 1;
+        float sy = flipVertical ? -1 : 1;
+        m.preScale(sx, sy);
         Bitmap dst = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), m, false);
         dst.setDensity(DisplayMetrics.DENSITY_DEFAULT);
+        return dst;
+    }
+
+    Bitmap rotate(Bitmap src, float degrees)
+    {
+        Matrix m = new Matrix();
+        m.setRotate(degrees);
+        Bitmap dst = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), m, false);
         return dst;
     }
 
@@ -304,8 +316,12 @@ public class MjpegViewDefault extends AbstractMjpegView {
         showFps = b;
     }
 
-    void _flipSource(boolean b) {
-        flipSource = b;
+    void _flipHorizontal(boolean b) {
+        flipHorizontal = b;
+    }
+
+    void _flipVertical(boolean b) {
+        flipVertical = b;
     }
 
     /*
@@ -378,7 +394,22 @@ public class MjpegViewDefault extends AbstractMjpegView {
 
     @Override
     public void flipSource(boolean flip) {
-        _flipSource(flip);
+        _flipHorizontal(flip);
+    }
+
+    @Override
+    public void flipHorizontal(boolean flip) {
+        _flipHorizontal(flip);
+    }
+
+    @Override
+    public void flipVertical(boolean flip) {
+        _flipVertical(flip);
+    }
+
+    @Override
+    public void setRotate(float degrees) {
+        rotateDegrees = degrees;
     }
 
     @Override

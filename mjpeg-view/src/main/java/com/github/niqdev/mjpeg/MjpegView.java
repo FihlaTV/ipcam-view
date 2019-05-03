@@ -12,6 +12,12 @@ public interface MjpegView {
 
     void flipSource(boolean flip);
 
+    void flipHorizontal(boolean flip);
+
+    void flipVertical(boolean flip);
+
+    void setRotate(float degrees);
+
     void stopPlayback();
 
     boolean isStreaming();
